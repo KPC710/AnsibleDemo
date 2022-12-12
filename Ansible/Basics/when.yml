@@ -1,0 +1,36 @@
+---
+- name: Installing Package using When condition
+  hosts: all 
+  become: true
+  gather_facts: true
+
+  tasks:
+
+    - name: Installing httpd package in RHEL Server
+      yum:
+        name: httpd
+        state: installed
+      when: ansible_os_family == "RedHat"
+
+    - name: Installing httpd package in Ubuntu Server
+      apt:
+        name: apache2
+        state: present
+      when: ansible_os_family == "Debian"
+
+    - name: Start apache Server on Ubuntu
+      service:
+        name: apache2
+        state: started
+      when: ansible_os_family == "Debian"
+
+    - name: Start apache Server on RHEL Server
+      service:
+        name: httpd
+        state: started
+      when: ansible_os_family == "RedHat"
+
+    - name: Copy the html content
+      copy:
+        src: /home/ansadmin/playbook/index.html
+        dest: /var/www/html

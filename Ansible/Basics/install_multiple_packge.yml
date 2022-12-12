@@ -1,0 +1,11 @@
+---
+- name: Install Multiple packages
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: Installing packages
+      yum:
+        name: ['git','wget','tree']
+        state: present

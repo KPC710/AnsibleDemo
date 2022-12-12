@@ -1,0 +1,23 @@
+---
+- name: creating User
+  hosts: all
+  gather_facts: no
+  become: true
+  #vars:
+   # user_name: 
+  vars_files:
+    - ./user.yml
+    
+  tasks:
+    - name: cretaing user {{ user_name }} 
+      user:
+        name: "{{ user_name }}"
+
+    - name: create a directory
+      file:
+        name: "{{ user_name }}"
+        path: /opt/{{user_name}}_temp_dir
+        state: directory
+        owner: "{{ user_name }}"
+        group: "{{ user_name }}"
+        mode: 0755

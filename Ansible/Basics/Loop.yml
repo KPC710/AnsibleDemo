@@ -1,0 +1,16 @@
+---
+- name: Installing Packages using loops
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+    - name: Install using loop 
+      yum:
+        name: "{{item.pkg}}"
+        state: "{{item.setup}}"
+
+      loop:
+        - { pkg: 'git', setup: 'absent' }
+        - { pkg: 'wget', setup: 'installed' }
+        - { pkg: 'tree', setup: 'removed' }

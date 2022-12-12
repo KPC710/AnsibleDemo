@@ -1,0 +1,24 @@
+---
+- name: Installing package using Notify and handlers
+  hosts: all
+  become: true
+  gather_facts: no
+
+  tasks:
+  - name: Installing httpd on redhat
+    yum:
+      name: httpd
+      state: installed
+    notify: start the httpd services
+
+  - name: copy the html content
+    copy:
+      src: /home/ansadmin/playbook/index.html
+      dest: /var/www/html
+
+  handlers:
+
+  - name: start httpd services
+    service:
+      name: httpd
+      state: started

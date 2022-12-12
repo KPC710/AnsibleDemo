@@ -1,0 +1,14 @@
+---
+- name: Cloning the private repo
+  hosts: all
+  gather_facts: no
+  vars_files:
+    - vaultcred.yml
+
+  tasks:
+    - name: cloning repo
+      git:
+        repo: https://Chethan K P:{{ git_passwd }}@github.com/Chethan/Ansible.git
+        dest: /home/ansadmin/vaulttest
+
+#ansible-playbook -i hosts <filename> --ask-vault-pass
